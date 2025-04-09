@@ -1,9 +1,11 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
+from django.shortcuts import render
 
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world!")
+    context = {"name": "test"}
+    return render(request, "hello/index.html", context=context)
 
 
 def brian(request):
@@ -15,4 +17,5 @@ def david(request):
 
 
 def greet(request, name):
-    return HttpResponse(f"Hello, {name.capitalize()}!")
+    context = {"name": name.capitalize()}
+    return render(request, "hello/greet.html", context=context)

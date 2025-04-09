@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # local apps
     "hello",
+    "newyear",
 ]
 
 MIDDLEWARE = [
