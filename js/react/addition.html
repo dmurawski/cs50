@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        #app {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        #problem {
+            font-size: 72px;
+        }
+
+        @keyframes incorect {
+            0% {
+                font-size: 72px;
+            }
+
+            50% {
+                font-size: 102px;
+            }
+
+            100% {
+                font-size: 72px;
+            }
+        }
+
+        .incorrect {
+            color: red;
+            animation-name: incorect;
+            animation-duration: 0.5s;
+            animation-iteration-count: 3;
+        }
+
+        @keyframes win {
+            0% {
+                font-size: 72px;
+            }
+
+            50% {
+                font-size: 102px;
+            }
+
+            100% {
+                font-size: 72px;
+            }
+        }
+
+        #winner {
+            font-size: 72px;
+            color: darkgreen;
+            animation-name: win;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+
+    <title>Counter</title>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <script type="text/babel">
+
+        function App() {
+
+            // const [num1, setNum1] = React.useState(1)
+            // const [num2, setNum2] = React.useState(2)
+            const [state, setState] = React.useState({
+                num1: 2,
+                num2: 4,
+                response: "",
+                score: 0,
+                incorrect: false
+            })
+
+            function inputKeyPress(event) {
+                if (event.key === "Enter") {
+                    const answer = parseInt(state.response)
+                    if (state.num1 + state.num2 === answer) {
+                        setState({
+                            ...state,
+                            num1: Math.ceil(Math.random() * 10),
+                            num2: Math.ceil(Math.random() * 10),
+                            score: state.score + 1,
+                            response: "",
+                            incorrect: false,
+                        })
+
+                    } else {
+                        setState({
+                            ...state,
+                            score: state.score - 1,
+                            response: "",
+                            incorrect: true,
+                        })
+
+                    }
+                }
+            }
+
+            function updateResponse(event) {
+                setState({
+                    // num1: state.num1,
+                    // num2: state.num2,
+                    ...state,
+                    response: event.target.value,
+                })
+            }
+
+            if (state.score === 10) {
+                return (
+                    <>
+                        <div id="winner">
+                            You won!
+                        </div>
+                    </>
+                )
+            }
+
+            return (
+                <>
+                    <div id="problem" className={state.incorrect ? "incorrect" : ""}>{state.num1} + {state.num2}</div>
+                    <input autoFocus={true} onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response} />
+                    <div>Score: {state.score}</div>
+                </>
+            )
+        }
+
+
+
+        ReactDOM.render(<App />, document.querySelector("#app"))
+
+    </script>
+
+</body>
+
+</html>
