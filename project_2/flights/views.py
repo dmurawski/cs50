@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from .models import Flight, Passenger
@@ -15,7 +15,7 @@ def index(request):
 
 
 def flight(request, flight_id):
-    flight = Flight.objects.get(pk=flight_id)
+    flight = get_object_or_404(Flight, pk=flight_id)
     context = {
         "flight": flight,
         "passengers": flight.passengers.all(),
