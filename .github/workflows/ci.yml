@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Checkout code
+      - name: Run Django unit tests
         run: |
             pip install --user django
             cd project_2
